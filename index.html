@@ -5,42 +5,76 @@
   <title>SOLElink - Customer Insights</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
       display: flex;
       height: 100vh;
-      background: #f4f4f9;
+      background: #f9fafc;
+      color: #333;
     }
+
+    /* Master (sidebar) */
     .master {
       width: 30%;
-      background: #222;
-      color: white;
+      background: #222831;
+      color: #eeeeee;
       padding: 20px;
       overflow-y: auto;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
     }
     .master h2 {
       margin-top: 0;
+      font-size: 22px;
+      border-bottom: 2px solid #00adb5;
+      padding-bottom: 8px;
     }
     .customer {
-      padding: 10px;
-      border-bottom: 1px solid #444;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 6px;
+      transition: 0.3s;
       cursor: pointer;
     }
     .customer:hover {
-      background: #333;
+      background: #00adb5;
+      color: #fff;
     }
+
+    /* Detail (main panel) */
     .detail {
       flex-grow: 1;
-      padding: 20px;
-      background: white;
+      padding: 40px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
     }
-    .detail h2 {
+    .detail-card {
+      background: #f1f5f9;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      max-width: 600px;
+      width: 100%;
+      transition: 0.3s;
+    }
+    .detail-card h2 {
       margin-top: 0;
+      color: #00adb5;
+    }
+    .detail-card p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    .detail-card strong {
+      color: #222831;
     }
   </style>
 </head>
 <body>
+  <!-- Master (customer list) -->
   <div class="master">
     <h2>Customers</h2>
     <div class="customer" onclick="showDetails('Alice Johnson')">Alice Johnson</div>
@@ -48,9 +82,13 @@
     <div class="customer" onclick="showDetails('Sophia Kim')">Sophia Kim</div>
     <div class="customer" onclick="showDetails('David Martinez')">David Martinez</div>
   </div>
+
+  <!-- Detail (customer insights) -->
   <div class="detail" id="detailView">
-    <h2>Select a customer</h2>
-    <p>Click on a name to see customer details.</p>
+    <div class="detail-card">
+      <h2>Welcome</h2>
+      <p>Select a customer from the list to view their insights.</p>
+    </div>
   </div>
 
   <script>
@@ -58,32 +96,39 @@
       "Alice Johnson": {
         repairs: "3 shoe sole repairs",
         spending: "$120 total",
-        vendor: "Downtown Shoe Care"
+        vendor: "Downtown Shoe Care",
+        loyalty: "Gold Member"
       },
       "Mark Lee": {
         repairs: "2 heel replacements",
         spending: "$85 total",
-        vendor: "SoleFix Express"
+        vendor: "SoleFix Express",
+        loyalty: "Silver Member"
       },
       "Sophia Kim": {
         repairs: "5 sneaker cleanings",
         spending: "$200 total",
-        vendor: "FreshKicks Lab"
+        vendor: "FreshKicks Lab",
+        loyalty: "Platinum Member"
       },
       "David Martinez": {
         repairs: "1 leather restoration",
         spending: "$95 total",
-        vendor: "Luxury SoleWorks"
+        vendor: "Luxury SoleWorks",
+        loyalty: "New Customer"
       }
     };
 
     function showDetails(name) {
       const detail = customerData[name];
       document.getElementById("detailView").innerHTML = `
-        <h2>${name}</h2>
-        <p><strong>Most Common Repair:</strong> ${detail.repairs}</p>
-        <p><strong>Total Spending:</strong> ${detail.spending}</p>
-        <p><strong>Preferred Vendor:</strong> ${detail.vendor}</p>
+        <div class="detail-card">
+          <h2>${name}</h2>
+          <p><strong>Most Common Repair:</strong> ${detail.repairs}</p>
+          <p><strong>Total Spending:</strong> ${detail.spending}</p>
+          <p><strong>Preferred Vendor:</strong> ${detail.vendor}</p>
+          <p><strong>Loyalty Status:</strong> ${detail.loyalty}</p>
+        </div>
       `;
     }
   </script>
