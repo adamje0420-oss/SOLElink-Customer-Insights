@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SOLElink - Customer Insights</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #1e2a38;
+      color: #fff;
+      padding: 20px 40px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+    }
+
+    .master {
+      width: 25%;
+      background-color: #1e2a38;
+      color: #ffffff;
+      padding: 30px 20px;
+      overflow-y: auto;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .master h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #00c9a7;
+      padding-bottom: 10px;
+    }
+
+    .customer {
+      padding: 14px 18px;
+      margin: 10px 0;
+      border-radius: 8px;
+      background-color: #2c3e50;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .customer:hover {
+      background-color: #00c9a7;
+      color: #fff;
+      transform: scale(1.02);
+    }
+
+    .detail {
+      flex-grow: 1;
+      padding: 40px;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .detail-card {
+      background-color: #eaf4f9;
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+      width: 100%;
+      transition: all 0.3s ease;
+      margin-bottom: 40px;
+    }
+
+    .detail-card h2 {
+      margin-top: 0;
+      color: #00c9a7;
+      font-size: 28px;
+    }
+
+    .detail-card p {
+      font-size: 17px;
+      margin: 12px 0;
+    }
+
+    .detail-card strong {
+      color: #1e2a38;
+    }
+
+    .charts {
+      max-width: 700px;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+
+    .charts h3 {
+      color: #1e2a38;
+      margin-bottom: 10px;
+    }
+
+    .charts img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    footer {
+      background-color: #1e2a38;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .master {
+        width: 100%;
+        height: auto;
+      }
+
+      .detail {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>SOLElink - Customer Insights Dashboard</header>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="master">
+      <h2>Customers</h2>
+      <div class="customer" onclick="showDetails('Alice Johnson')">Alice Johnson</div>
+      <div class="customer" onclick="showDetails('Mark Lee')">Mark Lee</div>
+      <div class="customer" onclick="showDetails('Sophia Kim')">Sophia Kim</div>
+      <div class="customer" onclick="showDetails('David Martinez')">David Martinez</div>
+    </div>
+
+    <!-- Main Panel -->
+    <div class="detail" id="detailView">
+      <div class="detail-card">
+        <h2>Welcome</h2>
+        <p>Select a customer from the list to view their detailed insights.</p>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="charts">
+        <h3>Customer Spending</h3>
+        <img src="customer_spending.png" alt="Customer Spending Chart">
+
+        <h3>Visit Frequency</h3>
+        <img src="customer_visits.png" alt="Customer Visit Frequency Chart">
+
+        <h3>Satisfaction Scores</h3>
+        <img src="customer_satisfaction.png" alt="Customer Satisfaction Chart">
+      </div>
+    </div>
+  </div>
+
+  <footer>&copy; 2025 SOLElink Inc. All rights reserved.</footer>
+
+  <script>
+    const customerData = {
+      "Alice Johnson": {
+        repairs: "3 shoe sole repairs",
+        spending: "$120 total",
+        vendor: "Downtown Shoe Care",
+        loyalty: "Gold Member",
+        visits: "7 visits",
+        satisfaction: "4.8/5",
+        history: "Last visit: Sep 12, 2025"
+      },
+      "Mark Lee": {
+        repairs: "2 heel replacements",
+        spending: "$85 total",
+        vendor: "SoleFix Express",
+        loyalty: "Silver Member",
+        visits: "5 visits",
+        satisfaction: "4.2/5",
+        history: "Last visit: Aug 30, 2025"
+      },
+      "Sophia Kim": {
+        repairs: "5 sneaker cleanings",
+        spending: "$200 total",
+        vendor: "FreshKicks Lab",
+        loyalty: "Platinum Member",
+        visits: "12 visits",
+        satisfaction: "4.9/5",
+        history: "Last visit: Sep 28, 2025"
+      },
+      "David Martinez": {
+        repairs: "1 leather restoration",
+        spending: "$95 total",
+        vendor: "Luxury SoleWorks",
+        loyalty: "New Customer",
+        visits: "1 visit",
+        satisfaction: "4.0/5",
+        history: "Last visit: Sep 15, 2025"
+      }
+    };
+
+    function showDetails(name) {
+      const detail = customerData[name];
+      document.getElementById("detailView").innerHTML = `
+        <div class="detail-card">
+          <h2>${name}</h2>
+          <p><strong>Most Common Repair:</strong> ${detail.repairs}</p>
+          <p><strong>Total Spending:</strong> ${detail.spending}</p>
+          <p><strong>Preferred Vendor:</strong> ${detail.vendor}</p>
+          <p><strong>Loyalty Status:</strong> ${detail.loyalty}</p>
+          <p><strong>Visit Frequency:</strong> ${detail.visits}</p>
+          <p><strong>Customer Satisfaction:</strong> ${detail.satisfaction}</p>
+          <p><strong>Service History:</strong> ${detail.history}</p>
+        </div>
+        <div class="charts">
+          <h3>Customer Spending</h3>
+          <img src="customer_spending.png" alt="Customer Spending Chart">
+
+          <h3>Visit Frequency</h3>
+          <img src="customer_visits.png" alt="Customer Visit Frequency Chart">
+
+          <h3>Satisfaction Scores</h3>
+          <img src="customer_satisfaction.png" alt="Customer Satisfaction Chart">
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
