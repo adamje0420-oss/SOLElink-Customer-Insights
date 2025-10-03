@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SOLElink - Customer Insights</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      background: #f4f4f9;
+    }
+    .master {
+      width: 30%;
+      background: #222;
+      color: white;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .master h2 {
+      margin-top: 0;
+    }
+    .customer {
+      padding: 10px;
+      border-bottom: 1px solid #444;
+      cursor: pointer;
+    }
+    .customer:hover {
+      background: #333;
+    }
+    .detail {
+      flex-grow: 1;
+      padding: 20px;
+      background: white;
+    }
+    .detail h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="master">
+    <h2>Customers</h2>
+    <div class="customer" onclick="showDetails('Alice Johnson')">Alice Johnson</div>
+    <div class="customer" onclick="showDetails('Mark Lee')">Mark Lee</div>
+    <div class="customer" onclick="showDetails('Sophia Kim')">Sophia Kim</div>
+    <div class="customer" onclick="showDetails('David Martinez')">David Martinez</div>
+  </div>
+  <div class="detail" id="detailView">
+    <h2>Select a customer</h2>
+    <p>Click on a name to see customer details.</p>
+  </div>
+
+  <script>
+    const customerData = {
+      "Alice Johnson": {
+        repairs: "3 shoe sole repairs",
+        spending: "$120 total",
+        vendor: "Downtown Shoe Care"
+      },
+      "Mark Lee": {
+        repairs: "2 heel replacements",
+        spending: "$85 total",
+        vendor: "SoleFix Express"
+      },
+      "Sophia Kim": {
+        repairs: "5 sneaker cleanings",
+        spending: "$200 total",
+        vendor: "FreshKicks Lab"
+      },
+      "David Martinez": {
+        repairs: "1 leather restoration",
+        spending: "$95 total",
+        vendor: "Luxury SoleWorks"
+      }
+    };
+
+    function showDetails(name) {
+      const detail = customerData[name];
+      document.getElementById("detailView").innerHTML = `
+        <h2>${name}</h2>
+        <p><strong>Most Common Repair:</strong> ${detail.repairs}</p>
+        <p><strong>Total Spending:</strong> ${detail.spending}</p>
+        <p><strong>Preferred Vendor:</strong> ${detail.vendor}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
